@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+   
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <title>Цифровой школьный атлас</title>
+    <link type="text/css" href="/styles/fonts/raleway.css" rel="stylesheet" />
+
+    <style type="text/css">
+        html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+        }
+        body {
+                display : flex;
+                flex-direction: column;
+                background-color: #F8F4EF;
+                font-feature-settings: 'pnum' on, 'lnum' on;
+                -webkit-font-smoothing: antialiased;
+                font-family: Raleway;
+        }
+
+	a {
+		text-decoration: none;
+	}
+
+        .divCaption {
+            width: 100%;
+            height: 52px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #c0c0c0;
+            flex-shrink: 0;
+        }
+
+        .maincaptionheader {
+            margin-left: 32px;
+            margin-right: 16px;
+            font-size: 18px;
+            font-weight: 800;
+            line-height: 52px;
+            color: #dc4228;
+            cursor: pointer;
+        }
+
+	.maincaptionheader:before {
+	    content: '';
+	    display: inline-block;
+	    width: 30px;
+	    height: 36px;
+	    margin-right: 8px;
+	    margin-bottom: -11px;
+	    background: url('../images/caption_applogo.svg') no-repeat;
+	    background-position-x: 0px;
+	}
+
+        .dv404U {
+                display : flex;
+                margin:auto;
+        }
+        .dv404logo {
+                background-image: url("/imgs/404logo.svg");
+                width: 135px;
+                margin-right: 34px;
+                margin-top: 18px;
+                background-size: contain;
+                background-repeat: no-repeat;
+        }
+        .dv404UT {
+                display : flex;
+                flex-direction: column;
+                width: 500px;
+        }
+        .dv404 {
+                font-weight: 700;
+                font-size: 96px;
+                line-height: 96px;
+        }
+        .dv404txt {
+                font-weight: 500;
+                font-size: 34px;
+                line-height: 34px;
+                margin-top: 10px;
+        }
+        .dv404desc {
+                font-weight: 400;
+                font-size: 24px;
+                line-height: 30px;
+                margin-top: 24px;
+        }
+    </style>
+</head>
+	<body>
+		<div class="divCaption">
+			<a href="{{url}}">
+				<div class="maincaptionheader">ШКОЛЬНЫЙ АТЛАС</div>
+			</a>
+		</div>
+		<div class="dv404U">
+		        <div class="dv404logo"></div>
+		        <div class="dv404UT">
+			        <div class='dv404'>404</div>
+			        <div class='dv404txt'>Страница не найдена</div>
+			        <div class='dv404desc'>Запрашиваемой страницы не существует.<br />Проверьте адрес и попробуйте ещё раз</div>
+		        </div>
+		</div>
+	</body>
+</html>

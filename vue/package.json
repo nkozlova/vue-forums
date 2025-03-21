@@ -1,0 +1,33 @@
+{
+  "name": "vueForum",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "rsbuild dev --open",
+    "build": "rsbuild build",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "@primeuix/themes": "^1.0.0",
+    "primeflex": "^4.0.0",
+    "primeicons": "^7.0.0",
+    "primevue": "^4.3.2",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@eslint/js": "^9.17.0",
+    "@rsbuild/core": "^1.2.14",
+    "@rsbuild/plugin-less": "^1.1.1",
+    "@rsbuild/plugin-sass": "^1.2.2",
+    "@rsbuild/plugin-vue": "^1.0.6",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "@vue/eslint-config-typescript": "^14.4.0",
+    "eslint": "^9.21.0",
+    "eslint-config-prettier": "^10.0.2",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-vue": "^9.32.0",
+    "typescript": "^5.8.2"
+  }
+}
