@@ -1,10 +1,10 @@
-import { CFilter, CTopicFilter } from "@/interfaces/CFilter";
+import { CBaseFilter, CTopicFilter } from "@/interfaces/CFilter";
 import { IBaseData, CTopicData } from "@/interfaces/CTypes";
 import { CApi } from "./api";
 
 export class CTopicApi extends CApi {
     // Загрузка данных
-    async loadItems(baseFilter: CFilter): Promise<IBaseData[]> {
+    async loadItems(baseFilter: CBaseFilter): Promise<IBaseData[]> {
         let forumId = (baseFilter as CTopicFilter).idForum
         let {data} = await this.post(this.getRoot(`getTopics/${forumId}`))
         return data.map((x: any) => new CTopicData(x.id, x.title, x.forum_id))

@@ -7,35 +7,29 @@
 
     <Button @click="showAddDialog = true" class="m-4">Add new Topic</Button>
     <AddDialog v-model:visible="showAddDialog"
-        :dataType="DataType.Topic"
-        @add="addTopic" />
+        :dataType="init.hardFilter.type"
+        @add="addItem" />
 
-    <Table ref="topicsList" 
-        :api="topicApi"
-        :hardFilter="new CTopicFilter(forum.id)"
-        v-model:selectedItem="selectedTopic" />
+    <Table ref="itemsList" 
+        :api="init.api"
+        :hardFilter="init.hardFilter"
+        v-model:selectedItem="selectedItem" />
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue'
     import { topicApi } from "../ts/api"
     import AddDialog from "./AddDialog.vue"
     import Table from "@/components/Table.vue"
-    import { CForumData, CTopicData, DataType } from "@/interfaces/CTypes"
-    import { CTopicFilter } from '@/interfaces/CFilter'
+    import { CForumData, CTopicFilter } from '@/interfaces'
+    import { IControllerInit } from "./controller/CControllerInit"
+    import controller from "./controller/controller"
 
-    const { forum } = defineProps({'forum': {type: CForumData, required: true}})
+    const { forum } = defineProps<{'forum': CForumData}>()
     defineEmits(["return"])
-
-    const selectedTopic = ref<CTopicData|null>(null)
-    const topicsList = ref()
-
-    const showAddDialog = ref(false)
-    let addTopic = async (title: string) => {
-        if (!title || !topicsList.value) return
-
-        const data = new CTopicData(-1, title, forum.id)
-        await topicApi.addItem(data)
-        topicsList.value.updateItems()
-    }
+    
+    const init = {
+        api: topicApi,
+        hardFilter: new CTopicFilter(forum.id)
+    } as IControllerInit
+    const {selectedItem, itemsList, showAddDialog, addItem} = controller(init)
 </script>

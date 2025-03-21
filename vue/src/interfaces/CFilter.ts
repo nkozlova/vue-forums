@@ -1,12 +1,24 @@
+import { DataType } from "./CTypes"
 
-export class CFilter {
+export class CBaseFilter {
+    type: DataType
+
+    constructor(type: DataType) {
+        this.type = type
+    }
 }
 
-export class CTopicFilter extends CFilter {
+export class CForumFilter extends CBaseFilter {
+    constructor() {
+        super(DataType.Forum)
+    }
+}
+
+export class CTopicFilter extends CBaseFilter {
     idForum: number
 
     constructor(idForum: number) {
-        super()
+        super(DataType.Topic)
         this.idForum = idForum
     }
 }

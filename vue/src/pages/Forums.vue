@@ -4,35 +4,29 @@
     </div>
 
     <Button @click="showAddDialog = true" class="m-4">Add new Forum</Button>
-    <AddDialog v-model:visible="showAddDialog" :dataType="DataType.Forum" @add="addForum" />
+    <AddDialog v-model:visible="showAddDialog" :dataType="init.hardFilter.type" @add="addItem" />
 
-    <Table ref="forumsList" 
-        :api="forumApi"
-        :hardFilter="new CFilter"
-        v-model:selectedItem="selectedForum"
+    <Table ref="itemsList" 
+        :api="init.api"
+        :hardFilter="init.hardFilter"
+        v-model:selectedItem="selectedItem"
         :canGoInside="true"
-        @goInside="$emit('goInside', selectedForum)" />
+        @goInside="$emit('goInside', selectedItem)" />
 </template>
 
 <script setup lang="ts">
-    import { ref } from 'vue'
     import { forumApi } from "@/ts/api"
     import AddDialog from "./AddDialog.vue"
     import Table from "@/components/Table.vue"
-    import { DataType, CForumData } from "@/interfaces/CTypes"
-    import { CFilter } from '@/interfaces/CFilter'
+    import { CForumFilter } from '@/interfaces'
+    import { IControllerInit } from "./controller/CControllerInit"
+    import controller from "./controller/controller"
 
     defineEmits(['goInside'])
-
-    const selectedForum = ref<CForumData|null>(null)
-    const forumsList = ref()
-
-    const showAddDialog = ref(false)
-    let addForum = async (title: string) => {
-        if (!title || !forumsList.value) return
-
-        const data = new CForumData(-1, title)
-        await forumApi.addItem(data)
-        forumsList.value.updateItems()
-    }
+    
+    const init = {
+        api: forumApi,
+        hardFilter: new CForumFilter
+    } as IControllerInit
+    const {selectedItem, itemsList, showAddDialog, addItem} = controller(init)
 </script>

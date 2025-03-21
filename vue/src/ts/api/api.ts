@@ -1,4 +1,4 @@
-import { CFilter } from "@/interfaces/CFilter";
+import { CBaseFilter } from "@/interfaces/CFilter";
 import { IBaseData } from "@/interfaces/CTypes";
 import  CApiBase  from "./apiBase";
 
@@ -9,7 +9,7 @@ export class CApi extends CApiBase {
         }
 
         // Загрузка данных
-        async loadItems(_filter: CFilter): Promise<IBaseData[]> {
+        async loadItems(_filter: CBaseFilter): Promise<IBaseData[]> {
                 throw new Error("Non inmplemented error")
         }
 
