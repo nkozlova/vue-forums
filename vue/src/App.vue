@@ -1,4 +1,5 @@
 <template>
+    <ConfirmDialog />
     <Forums v-if="!showedForum" @goInside="(forum: CForumData) => showedForum=forum" />
     <Topics v-else :forum="showedForum" @return="showedForum=null" />
 </template>

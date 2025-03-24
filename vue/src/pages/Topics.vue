@@ -6,30 +6,27 @@
     </div>
 
     <Button @click="showAddDialog = true" class="m-4">Add new Topic</Button>
-    <AddDialog v-model:visible="showAddDialog"
-        :dataType="init.hardFilter.type"
+    <AddTopicDialog v-model:visible="showAddDialog"
+        :forumId="forum.id"
         @add="addItem" />
 
     <Table ref="itemsList" 
-        :api="init.api"
-        :hardFilter="init.hardFilter"
+        :api="topicApi"
+        :hardFilter="new CTopicFilter(forum.id)"
         v-model:selectedItem="selectedItem" />
 </template>
 
 <script setup lang="ts">
     import { topicApi } from "../ts/api"
-    import AddDialog from "./AddDialog.vue"
+    import AddTopicDialog from "@/components/dialogs/AddTopicDialog.vue"
     import Table from "@/components/Table.vue"
     import { CForumData, CTopicFilter } from '@/interfaces'
-    import { IControllerInit } from "./controller/CControllerInit"
     import controller from "./controller/controller"
 
     const { forum } = defineProps<{'forum': CForumData}>()
     defineEmits(["return"])
     
-    const init = {
-        api: topicApi,
-        hardFilter: new CTopicFilter(forum.id)
-    } as IControllerInit
-    const {selectedItem, itemsList, showAddDialog, addItem} = controller(init)
+    const {selectedItem, itemsList, showAddDialog, addItem} = controller({
+        api: topicApi
+    })
 </script>

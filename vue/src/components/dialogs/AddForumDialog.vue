@@ -1,7 +1,7 @@
 <template>
     <Dialog v-model:visible="visible"
         modal 
-        :header="dlgTitle" 
+        header="Add new Forum" 
         :style="{ width: '25rem' }">
 
         <IftaLabel>
@@ -27,26 +27,16 @@
     import Dialog from "primeVue/dialog"
     import InputText from "primeVue/inputtext"
     import IftaLabel from 'primevue/iftalabel'
-    import { ref, computed } from "vue"
-    import { DataType } from "@/interfaces/CTypes"
+    import { ref } from "vue"
+    import { CForumData } from "../../interfaces"
 
     const visible = defineModel<boolean>('visible')
-    const { dataType } = defineProps<{dataType: DataType}>()
-
     const emit = defineEmits(["add"])
-
-    const dlgTitle = computed(() => {
-        switch (dataType) {
-            case DataType.Forum: return "Add new Forum"
-            case DataType.Topic: return "Add new Topic"
-            default: throw new Error(`Unexpected type ${dataType}`)
-        }
-    })
 
     const title = ref("")
     let onAdd = () => {
         visible.value = false
-        emit('add', title.value)
+        emit('add', {id: -1, title: title.value} as CForumData)
         title.value = ""
     }
 </script>

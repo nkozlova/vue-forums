@@ -37,8 +37,9 @@
         <Column header="" style="width: 30px">
             <template #body="{ data }">
                 <Button v-if="data == selectedItem"
-                    @click="() => deleteItem(data.id)" 
-                    class="flex justify-content-end ml-2">X</Button>
+                    icon="pi pi-trash"
+                    aria-label="Delete"
+                    @click="() => deleteItem(data.id)" />
             </template>
         </Column>
     </DataTable>
@@ -51,24 +52,32 @@
     import InputIcon from 'primevue/inputicon'
     import InputText from "primeVue/inputtext"
     import { ref, onMounted, defineExpose } from "vue"
-    import { IBaseData } from "@/interfaces/CTypes"
-    import { CFilter } from "@/interfaces/CFilter"
+    import { CBaseData } from "@/interfaces/CTypes"
+    import { CBaseFilter } from "@/interfaces/CFilter"
     import { CApi } from "@/ts/api"
+    import { useConfirm } from "primevue/useconfirm";
 
-    const selectedItem = defineModel<IBaseData|null>('selectedItem')
+    const selectedItem = defineModel<CBaseData|null>('selectedItem')
     const props = defineProps<{api: CApi, 
-        hardFilter: CFilter, 
+        hardFilter: CBaseFilter, 
         canGoInside?: boolean}>()
     defineEmits(['goInside'])
 
     // Все элементы для представления в таблице
-    const items = ref<IBaseData[]>([])
+    const items = ref<CBaseData[]>([])
     const updateItems = async () => items.value = await props.api.loadItems(props.hardFilter)
 
     // Удаление элемента
+    const deleteConfirm = useConfirm();
     const deleteItem = async(id: number) => {
-        await props.api.deleteItem(id)
-        updateItems()
+        deleteConfirm.require({
+            message: 'Are you sure you want to delete this item?',
+            header: 'Delete Confirmation', 
+            accept: async () => {
+                await props.api.deleteItem(id)
+                updateItems()
+            }
+        });
     }
 
     // Фильтр на значения в таблице

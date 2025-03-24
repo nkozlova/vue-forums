@@ -3,29 +3,31 @@ export enum DataType {
     Topic = 'topic'
 }
 
-export interface IBaseData {
-    id: number
-    title: string
-}
-
-export class CForumData implements IBaseData {
+export class CBaseData {
     id: number
     title: string
 
-    constructor(id: number, title: string) {
-        this.id = id
-        this.title = title
+    constructor(data: CBaseData) {
+        this.id = data.id
+        this.title = data.title
+    }
+
+    getType() : DataType {
+        throw new Error("Not implemented")
     }
 }
 
-export class CTopicData implements IBaseData {
-    id: number
-    title: string
-    forum_id: number
+export class CForumData extends CBaseData {
+    getType() { return DataType.Forum }
+}
 
-    constructor(id: number, title: string, forum_id: number) {
-        this.id = id
-        this.title = title
-        this.forum_id = forum_id
+export class CTopicData extends CBaseData {
+    forumId: number
+
+    constructor(data: CTopicData) {
+        super(data)
+        this.forumId = data.forumId
     }
+
+    getType() { return DataType.Topic }
 }

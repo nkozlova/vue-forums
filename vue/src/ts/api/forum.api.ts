@@ -1,16 +1,16 @@
 import { CBaseFilter } from "@/interfaces/CFilter";
-import { IBaseData, CForumData } from "@/interfaces/CTypes";
+import { CBaseData, CForumData } from "@/interfaces/CTypes";
 import { CApi } from "./api";
 
 export class CForumApi extends CApi {
     // Загрузка данных
-    async loadItems(_: CBaseFilter): Promise<IBaseData[]> {
+    async loadItems(_: CBaseFilter): Promise<CBaseData[]> {
         let {data} = await this.post(this.getRoot("getForums"))
-        return data.map((x: any) => new CForumData(x.id, x.title))
+        return data.map((x: any) => new CForumData(x))
     }
 
     // Добавление нового элемента
-    async addItem(base: IBaseData): Promise<void> {
+    async addItem(base: CBaseData): Promise<void> {
         let title = base.title
         await this.post(this.getRoot("add"), {title})
     }
