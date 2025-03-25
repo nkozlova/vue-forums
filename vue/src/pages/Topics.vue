@@ -10,9 +10,9 @@
         :forumId="forum.id"
         @add="addItem" />
 
-    <EditForumDialog v-if="showEditDialog"
+    <EditTopicDialog v-if="showEditDialog"
         v-model:visible="showEditDialog"
-        :initialForum="selectedItem as CForumData"
+        :initialTopic="selectedItem as CTopicData"
         @edit="editItem" />
 
     <Table ref="itemsList" 
@@ -25,9 +25,9 @@
 <script setup lang="ts">
     import { topicApi } from "../ts/api"
     import AddTopicDialog from "@/components/dialogs/AddTopicDialog.vue"
-    import EditForumDialog from "@/components/dialogs/EditForumDialog.vue"
+    import EditTopicDialog from "@/components/dialogs/EditTopicDialog.vue"
     import Table from "@/components/Table.vue"
-    import { CForumData, CTopicFilter } from '@/interfaces'
+    import { CForumData, CTopicFilter, CTopicData } from '@/interfaces'
     import controller from "./controller/controller"
 
     const { forum } = defineProps<{'forum': CForumData}>()

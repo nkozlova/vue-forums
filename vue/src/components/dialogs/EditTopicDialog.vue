@@ -35,7 +35,7 @@
     const { initialTopic } = defineProps<{initialTopic: CTopicData}>()
     const emit = defineEmits(['edit'])
 
-    const topic = ref<CForumData>(new CForumData(initialTopic))
+    const topic = ref<CTopicData>(new CTopicData(initialTopic))
 
     const header = computed(() => `Редактировать Топик '${initialTopic.title}'`)
 
