@@ -5,34 +5,47 @@ module.exports = class topicController {
 
     // Список всех топиков для конкретного форума
     async getTopicsForForum(req, res) {
-        let topic = this.getModel()
-        let forum_id = req.params.forum_id
-        if (!forum_id)
-            topic.error("Incorrect forum_id!")
+        const topic = this.getModel()
+        const forumId = req.params.forum_id
+        if (!forumId)
+            topic.error("Incorrect forumId!")
 
-        topic.result(res, async () => await topic.getTopicsForForum(forum_id));
+        topic.result(res, async () => await topic.getTopicsForForum(forumId));
     }
 
     // Добавление нового, передается название и id форума
     async addTopic(req, res) {
-        let topic = this.getModel()
-        let forum_id = req.params.forum_id
-        if (!forum_id)
-            topic.error("Incorrect forum_id!")
-        let title = req.body.title
+        const topic = this.getModel()
+        const forumId = req.params.forum_id
+        if (!forumId)
+            topic.error("Incorrect forumId!")
+        const title = req.body.title
         if (!title)
             topic.error("Incorrect title!")
 
-        topic.result(res, async () => await topic.addTopic(title, forum_id));
+        topic.result(res, async () => await topic.addTopic(title, forumId));
     }
 
     // Удаление топика по id
     async deleteTopic(req, res) {
-        let topic = this.getModel()
-        let id = req.params.id
+        const topic = this.getModel()
+        const id = req.params.id
         if (!id)
             topic.error("Incorrect id!")
 
         topic.result(res, async () => await topic.deleteTopic(id));
+    }
+
+    // Редактирование топика по id
+    async editTopic(req, res) {
+        const topic = this.getModel()
+        const id = req.params.id
+        if (!id)
+            topic.error("Incorrect id!")
+        const title = req.body.title
+        if (!title)
+            topic.error("Incorrect title!")
+
+        topic.result(res, async () => await topic.editTopic(id, title));
     }
 }

@@ -1,22 +1,22 @@
 <template>
     <Dialog v-model:visible="visible"
         modal 
-        header="Add new Forum" 
+        header="Новый Форум" 
         :style="{ width: '25rem' }">
 
         <IftaLabel>
             <InputText id="title"
                 v-model="title" fluid />
-            <label for="title">Title</label>
+            <label for="title">Название</label>
         </IftaLabel>
         
         <template #footer>
             <Button type="button" 
-                label="Cancel" 
+                label="Отменить" 
                 severity="secondary"
                 @click="visible = false" />
             <Button type="button"
-                label="Add"
+                label="Создать"
                 @click="onAdd"
                 :disabled="!title" />
         </template>
@@ -28,7 +28,7 @@
     import InputText from "primeVue/inputtext"
     import IftaLabel from 'primevue/iftalabel'
     import { ref } from "vue"
-    import { CForumData } from "../../interfaces"
+    import { CForumData } from "@/interfaces"
 
     const visible = defineModel<boolean>('visible')
     const emit = defineEmits(["add"])

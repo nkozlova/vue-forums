@@ -5,14 +5,14 @@ module.exports = class forumController {
 
     // Список всех форумов
     async getForums(res) {
-        let forum = this.getModel()
+        const forum = this.getModel()
         forum.result(res, async () => await forum.getForums());
     }
 
     // Добавление нового, передается название
     async addForum(req, res) {
-        let forum = this.getModel()
-        let title = req.body.title
+        const forum = this.getModel()
+        const title = req.body.title
         if (!title)
             forum.error("Incorrect title!")
 
@@ -21,11 +21,24 @@ module.exports = class forumController {
 
     // Удаление форума по id
     async deleteForum(req, res) {
-        let forum = this.getModel()
-        let id = req.params.id
+        const forum = this.getModel()
+        const id = req.params.id
         if (!id)
             forum.error("Incorrect id!")
 
         forum.result(res, async () => await forum.deleteForum(id));
+    }
+
+    // Редактирование форума по id
+    async editForum(req, res) {
+        const forum = this.getModel()
+        const id = req.params.id
+        if (!id)
+            forum.error("Incorrect id!")
+        const title = req.body.title
+        if (!title)
+            forum.error("Incorrect title!")
+
+        forum.result(res, async () => await forum.editForum(id, title));
     }
 }

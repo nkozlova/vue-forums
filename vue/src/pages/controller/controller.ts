@@ -8,7 +8,6 @@ export default function controller(init: IControllerInit) {
     const itemsList = ref() // Именованная ссылка на лист
 
     const showAddDialog = ref(false) // Показать ли диалог добавления новой записи
-
     // Добавление нового элемента
     const addItem = async (data: CBaseData) => {
         await init.api.addItem(data)
@@ -17,5 +16,14 @@ export default function controller(init: IControllerInit) {
         itemsList.value.updateItems() // Обновляем список, чтобы подтянуть новые данные для отображения
     }
 
-    return {selectedItem, itemsList, showAddDialog, addItem}
+    const showEditDialog = ref(false) // Показать ли диалог редактирования записи
+    // Редактирование элемента
+    const editItem = async (data: CBaseData) => {
+        await init.api.editItem(data)
+
+        if (!itemsList.value) return
+        itemsList.value.updateItems() // Обновляем список, чтобы подтянуть новые данные для отображения
+    }
+
+    return {selectedItem, itemsList, showAddDialog, addItem, showEditDialog, editItem}
 }

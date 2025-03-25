@@ -1,12 +1,13 @@
 <template>
     <Dialog v-model:visible="visible"
         modal 
-        header="Новая Тема" 
+        :header="header" 
         :style="{ width: '25rem' }">
 
         <IftaLabel>
             <InputText id="title"
-                v-model="title" fluid />
+                v-model="forum.title" 
+                fluid />
             <label for="title">Название</label>
         </IftaLabel>
         
@@ -16,9 +17,9 @@
                 severity="secondary"
                 @click="visible = false" />
             <Button type="button"
-                label="Создать"
-                @click="onAdd"
-                :disabled="!title" />
+                label="Редактировать"
+                @click="onEdit"
+                :disabled="!forum.title || forum.title == initialForum.title" />
         </template>
     </Dialog>
 </template>
@@ -27,17 +28,19 @@
     import Dialog from "primeVue/dialog"
     import InputText from "primeVue/inputtext"
     import IftaLabel from 'primevue/iftalabel'
-    import { ref } from "vue"
-    import { CTopicData } from "@/interfaces"
+    import { CForumData } from "@/interfaces"
+    import { ref, computed } from 'vue'
 
     const visible = defineModel<boolean>('visible')
-    const { forumId } = defineProps<{forumId: number}>()
-    const emit = defineEmits(["add"])
+    const { initialForum } = defineProps<{initialForum: CForumData}>()
+    const emit = defineEmits(['edit'])
 
-    const title = ref("")
-    let onAdd = () => {
+    const forum = ref<CForumData>(new CForumData(initialForum))
+
+    const header = computed(() => `Редактировать Форум '${initialForum.title}'`)
+
+    let onEdit = () => {
         visible.value = false
-        emit('add', {id: -1, title: title.value, forumId: forumId} as CTopicData)
-        title.value = ""
+        emit("edit", forum.value)
     }
 </script>

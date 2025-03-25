@@ -10,6 +10,7 @@ import './less/index.css';
 import Button from "primevue/button"
 import ConfirmDialog from 'primevue/confirmdialog';
 import ConfirmationService from 'primevue/confirmationservice';
+import Tooltip from 'primevue/tooltip';
 
 createApp(App)
     .use(PrimeVue, {
@@ -18,6 +19,7 @@ createApp(App)
         }
     })
     .use(ConfirmationService)
+    .directive('tooltip', Tooltip)
     .component('Button', Button)
     .component('ConfirmDialog', ConfirmDialog)
     .mount('#root');

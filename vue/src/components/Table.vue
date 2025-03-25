@@ -14,23 +14,38 @@
                     <InputIcon>
                         <i class="pi pi-search" />
                     </InputIcon>
-                    <InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+                    <InputText v-model="filters['global'].value" placeholder="Поиск" />
                 </IconField>
             </div>
         </template>
-        <template #empty> No items to present</template>
-        <template #loading> We are loading... Please wait... </template>
+        <template #empty> Данных нет</template>
+        <template #loading> Идет загрузка... Пожалуйста, подождите... </template>
 
-        <!--Content-->
-        <Column field="title" header="Title" sortable></Column>
+        <!-- Содержимое -->
+        <Column field="title" header="Название" sortable>
+            <template v-if="props.canGoInside" #body="{ data }">
+                <Button :label="data.title"
+                    variant="link"
+                    @click="$emit('goInside', data)" />
+            </template>
+        </Column>
         <!-- Колонка с переходом к форуму -->
         <Column v-if="props.canGoInside"
             header=""
             style="width: 150px">
             <template #body="{ data }">
                 <Button v-if="data == selectedItem"
-                    @click="$emit('goInside')" 
-                    class="flex justify-content-end ml-2">Go inside</Button>
+                    @click="$emit('goInside', data)" 
+                    class="flex justify-content-end ml-2">Открыть</Button>
+            </template>
+        </Column>
+        <!-- Колонка с редактированием -->
+        <Column header="" style="width: 30px">
+            <template #body="{ data }">
+                <Button v-if="data == selectedItem"
+                    icon="pi pi-pencil"
+                    v-tooltip.bottom="'Редактировать'"
+                    @click="$emit('edit')" />
             </template>
         </Column>
         <!-- Колонка с удалением -->
@@ -38,7 +53,7 @@
             <template #body="{ data }">
                 <Button v-if="data == selectedItem"
                     icon="pi pi-trash"
-                    aria-label="Delete"
+                    v-tooltip.bottom="'Удалить'"
                     @click="() => deleteItem(data.id)" />
             </template>
         </Column>
@@ -61,7 +76,7 @@
     const props = defineProps<{api: CApi, 
         hardFilter: CBaseFilter, 
         canGoInside?: boolean}>()
-    defineEmits(['goInside'])
+    defineEmits(['goInside', 'edit'])
 
     // Все элементы для представления в таблице
     const items = ref<CBaseData[]>([])
